@@ -1,16 +1,22 @@
 // api/chat.js
 export default async function handler(req, res) {
-    // 只允許 POST 請求
     if (req.method !== 'POST') {
         return res.status(405).json({ message: 'Only POST requests allowed' });
     }
 
     const { prompt } = req.body;
-    // 從系統環境變數讀取 Key (之後在 Vercel 後台設定)
     const API_KEY = process.env.GEMINI_API_KEY; 
 
+    // 偵錯用：確保 API Key 有抓到
+    if (!API_KEY) {
+        return res.status(500).json({ error: "Server API Key is missing!" });
+    }
+
     try {
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
+        // 修正點：將 v1beta 改為 v1，確保模型名稱使用正確格式
+        const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+        
+        const response = await fetch(url, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
