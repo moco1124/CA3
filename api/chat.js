@@ -5,16 +5,15 @@ export default async function handler(req, res) {
     }
 
     const { prompt } = req.body;
-    const API_KEY = process.env.GEMINI_API_KEY; 
+    const API_KEY = process.env.GEMINI_API_KEY;
 
-    // 偵錯用：確保 API Key 有抓到
     if (!API_KEY) {
-        return res.status(500).json({ error: "Server API Key is missing!" });
+        return res.status(500).json({ error: "API Key is missing!" });
     }
 
     try {
-        // 修正點：將 v1beta 改為 v1，確保模型名稱使用正確格式
-        const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+        // --- 修正點：將模型名稱改為 gemini-1.5-flash-latest ---
+        const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash-latest:generateContent?key=${API_KEY}`;
         
         const response = await fetch(url, {
             method: "POST",
