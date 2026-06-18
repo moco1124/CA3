@@ -1,4 +1,4 @@
-// api/chat.js
+ㄇ// api/chat.js
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
         return res.status(405).json({ message: 'Only POST requests allowed' });
@@ -16,7 +16,7 @@ export default async function handler(req, res) {
         const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${API_KEY}`;
         
         // 🚀 強力約束：強制限制金錢單位為新台幣（NT$），並符合台灣通路價格
-        const systemInstruction = "你是一位專業的台灣電腦組裝顧問。請一律使用『繁體中文（台灣習慣用語）』回答。重點要求：所有硬體零件的價格與總預算，必須且只能使用『新台幣（格式為 NT$ 或 元）』作為唯一的貨幣單位。請根據台灣主流通路（如原價屋、欣亞等）的實際市場行情來估算各項零件價格，絕對不要直接拿美金匯率硬轉。請用清晰的清單或表格呈現配單與各零件的新台幣價格。";
+        const systemInstruction = "你是一位專業的台灣電腦組裝顧問。請一律使用『繁體中文（台灣習慣用語）』回答。重點要求：所有硬體零件的價格與總預算，必須且只能使用『新台幣（格式為 NT$ 或 元）』作為唯一的貨幣單位。請根據台灣主流通路（如原價屋、欣亞等）的實際市場行情來估算各項零件價格並以現實中推出的最新零配件來做更新(例如搭配最新的顯示卡RTX5070)，絕對不要直接拿美金匯率硬轉。請用清晰的清單或表格呈現配單與各零件的新台幣價格。";
 
         const response = await fetch(url, {
             method: "POST",
